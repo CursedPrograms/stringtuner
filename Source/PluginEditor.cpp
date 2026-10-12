@@ -1,4 +1,8 @@
 #include "PluginEditor.h"
+#if JucePlugin_Build_Standalone
+ #include <juce_audio_utils/juce_audio_utils.h>
+ #include <juce_audio_plugin_client/Standalone/juce_StandaloneFilterWindow.h>
+#endif
 
 using namespace juce;
 
@@ -122,6 +126,14 @@ StringTunerEditor::StringTunerEditor (StringTunerProcessor& p)
         pads[(size_t) s].onClick = [this, s] { setLockedString (lockedString() == s ? -1 : s); };
         addChildComponent (pads[(size_t) s]);
     }
+
+   #if JucePlugin_Build_Standalone
+    // The standalone app starts with the input muted "to avoid a feedback loop" and a bar across
+    // the top; a tuner has to hear you, so open with the input live (MUTE is right here).
+    if (p.wrapperType == AudioProcessor::wrapperType_Standalone)
+        if (auto* holder = StandalonePluginHolder::getInstance())
+            holder->getMuteInputValue().setValue (false);
+   #endif
 
     setSize (780, 500);
     refresh();
@@ -399,7 +411,7 @@ void StringTunerEditor::paint (Graphics& g)
     g.setFont (font (13.0f));
     const auto footer = Rectangle<float> (24.0f, 462.0f, 732.0f, 24.0f);
     g.drawText (String ("stringtuner v" STRINGTUNER_VERSION "      ")
-                    + String (CharPointer_UTF8 ("Farica\xe2\x98\x86Kimora  (c) Cursed Entertainment")),
+                    + String (CharPointer_UTF8 ("Farica\xe2\x98\x86Kimora \xc2\xa9 Cursed Entertainment")),
                 footer, Justification::centredLeft);
     if (! chromatic)
         g.drawText ("click a string to lock it, again for auto", footer, Justification::centredRight);

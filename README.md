@@ -3,7 +3,10 @@
 A tuner for every string instrument, from the octobass (C0, 16 Hz) to the top of the piano
 (C8, 4186 Hz). VST3 plugin and a standalone app with ASIO, for Windows.
 
-Farica☆Kimora  (c) Cursed Entertainment
+**Website (with a tuner you can try in the browser):** https://cursedprograms.github.io/stringtuner/
+&middot; **Download:** [latest release](https://github.com/CursedPrograms/stringtuner/releases/latest)
+
+[Farica☆Kimora](https://github.com/Farica-Kimora) © Cursed Entertainment
 
 ![stringtuner](images/stringtuner.png)
 
@@ -29,8 +32,8 @@ Farica☆Kimora  (c) Cursed Entertainment
 
 ## How it hears the pitch
 YIN pitch detection with the difference function computed by FFT, so the long window the lowest
-strings need (about a fifth of a second, 40,000 samples at 192 kHz) stays cheap, then measured again exactly across as many
-periods as fit for sub-cent accuracy on the highest notes. A big string with a weak fundamental
+strings need (about a fifth of a second, 40,000 samples at 192 kHz) stays cheap, then measured
+again exactly across as many periods as fit for sub-cent accuracy on the highest notes. A big string with a weak fundamental
 doesn't fool it into reading an octave up.
 
 Tested offline (`tools/check.cpp`) on every semitone from C0 to C8 at 44.1, 48, 96 and 192 kHz:
@@ -39,8 +42,9 @@ at 48 kHz. Very stiff low strings (piano, low B on a bass) read a few cents abov
 fundamental, the same as on any tuner, because their overtones are sharp.
 
 ## Install
-Download the zip from Releases:
+Download the zip from [Releases](https://github.com/CursedPrograms/stringtuner/releases):
 - `stringtuner.exe` - standalone; pick your audio interface (ASIO) in Options > Audio/MIDI Settings.
+  The input is live from the start (no "muted to avoid feedback" bar).
 - `stringtuner.vst3` - copy to `C:\Program Files\Common Files\VST3` and rescan in your DAW.
 
 ## Build
@@ -48,4 +52,20 @@ Needs CMake and Visual Studio 2022 ("Desktop development with C++"). Run `build.
 land in `dist\`. JUCE 8 is downloaded the first time.
 
 ## License
-MIT, see [LICENSE](LICENSE).
+MIT, see [LICENSE](LICENSE). It is built with [JUCE](https://juce.com), which is under its own
+licence (AGPLv3 or a commercial JUCE licence), and the standalone app uses Steinberg's ASIO
+interface bundled with JUCE. Anyone distributing compiled builds must follow those licences too.
+
+---
+
+<br>
+<div align="center">
+© Cursed Entertainment 2026
+</div>
+<br>
+<div align="center">
+<a href="https://cursed-entertainment.itch.io/" target="_blank">
+    <img src="https://github.com/CursedPrograms/cursedentertainment/raw/main/images/logos/logo-wide-grey.png"
+        alt="CursedEntertainment Logo" style="width:250px;">
+</a>
+</div>

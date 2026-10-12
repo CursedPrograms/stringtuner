@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>stringtuner - a tuner for every string instrument</title>
+<meta name="description" content="stringtuner: a free tuner for every string instrument, from the octobass (C0, 16 Hz) to the top of the piano (C8), within 0.4 cents. VST3 and standalone for Windows. Try it in your browser.">
+<link rel="icon" href="site/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="site/style.css">
+<script src="site/site.js" defer></script>
+</head>
+<body>
+
+<header class="masthead">
+  <h1>string<span>tuner</span></h1>
+  <p class="subtitle">from the octobass to the violino piccolo</p>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <p class="lead">One tuner for every string instrument: <b>C0 (16 Hz)</b> to <b>C8 (4186 Hz)</b>,
+        within <b>0.4 cents</b>.</p>
+      <p>Pick your instrument and it shows the open strings; play one and the nearest lights up.
+        A needle for the cents, a strobe for the last bit of precision.</p>
+      <div class="actions">
+        <a class="button" href="https://github.com/CursedPrograms/stringtuner/releases/download/v0.1.0/stringtuner-v0.1.0-win64.zip">DOWNLOAD</a>
+        <a class="button ghost" href="#try">TRY IT HERE</a>
+        <a class="button ghost" href="https://github.com/CursedPrograms/stringtuner">SOURCE</a>
+      </div>
+      <p class="small">free &middot; Windows 10/11 64-bit &middot; VST3 + standalone app (ASIO) &middot; v0.1.0</p>
+    </div>
+    <figure class="window">
+      <img src="images/stringtuner.png" alt="The stringtuner window tuning a double bass: E1, 12.7 cents flat, with the four open strings below" width="780" height="500">
+    </figure>
+  </section>
+
+  <section id="try">
+    <h2>Try it in your browser</h2>
+    <p class="small">Uses your microphone; nothing leaves your computer. The plugin hears more precisely (and lower), but this gets you close.</p>
+    <div class="tuner" aria-live="polite">
+      <div class="tuner-top">
+        <label for="instrument">Instrument</label>
+        <select id="instrument"></select>
+        <label for="reference">A4</label>
+        <input id="reference" type="number" min="415" max="466" step="1" value="440">
+        <button id="listen" class="button" type="button">START</button>
+      </div>
+      <div class="tuner-body">
+        <div class="note"><span id="note-name">-</span><span id="note-octave"></span></div>
+        <div class="meter">
+          <div class="scale"><span>-50</span><span>-25</span><span>0</span><span>+25</span><span>+50</span></div>
+          <div class="zone"></div>
+          <div id="needle" class="needle"></div>
+        </div>
+        <div id="strobe" class="strobe"></div>
+        <p id="reading" class="reading">press START and play a string</p>
+      </div>
+      <div id="strings" class="strings"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Instruments</h2>
+    <div id="instrument-list" class="instrument-list">
+      <noscript><p>31 instruments: violin family, double bass (4 tunings), octobass, guitars, basses, ukuleles, mandolin, banjo and more, plus chromatic.</p></noscript>
+    </div>
+  </section>
+
+  <section>
+    <h2>How it hears the pitch</h2>
+    <ul class="specs">
+      <li><b>YIN</b> pitch detection, with the difference function done by FFT so the long window the lowest strings need (a fifth of a second) stays cheap.</li>
+      <li>Measured again exactly across as many periods as fit, so the highest notes, only a dozen samples long, still land within a fraction of a cent.</li>
+      <li>A big string with a weak fundamental doesn't fool it into reading an octave up.</li>
+      <li>Tested on every semitone from C0 to C8 at 44.1, 48, 96 and 192 kHz: within 0.4 cents everywhere. pluginval strictness 10: passed.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Plug in</h2>
+    <div class="cards">
+      <article class="card">
+        <h3>Standalone</h3>
+        <ol>
+          <li>Unzip, run <code>stringtuner.exe</code>.</li>
+          <li>Options &gt; Audio/MIDI Settings: <b>ASIO</b>, your interface, the input your instrument is in.</li>
+          <li>The input is live from the start; MUTE silences the output.</li>
+        </ol>
+      </article>
+      <article class="card">
+        <h3>VST3</h3>
+        <ol>
+          <li>Copy <code>stringtuner.vst3</code> to <code>C:\Program Files\Common Files\VST3</code>.</li>
+          <li>Rescan plugins in your DAW and put it on the instrument's track.</li>
+        </ol>
+      </article>
+      <article class="card">
+        <h3>"Windows protected your PC"?</h3>
+        <p>The files aren't code-signed, so SmartScreen may warn you. Click <b>More info &gt; Run anyway</b>.</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p class="credit"><a href="https://farica-kimora.github.io/FaricaKimora/">Farica&#9734;Kimora</a> &copy; Cursed Entertainment</p>
+  <a class="studio" href="https://cursed-entertainment.itch.io/">
+    <img src="https://github.com/CursedPrograms/cursedentertainment/raw/main/images/logos/logo-wide-grey.png" alt="Cursed Entertainment" width="250">
+  </a>
+  <p class="small"><a href="https://github.com/CursedPrograms/stringtuner">GitHub</a> &middot; MIT licence &middot; built with JUCE</p>
+</footer>
+
+</body>
+</html>
