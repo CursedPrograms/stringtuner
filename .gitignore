@@ -1,0 +1,4 @@
+build/
+test_output/
+build.log
+dist/
